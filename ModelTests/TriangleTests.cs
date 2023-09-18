@@ -65,5 +65,14 @@ namespace ShapeTracker.Tests
       int result = newTriangle.GetSide3();
       Assert.AreEqual(length3, result);
     }
+
+    [TestMethod]
+    public void SetSide3_ReturnsSide3_Void()
+    {
+      int side3ValueReplacement = 70;
+      Triangle newTriangle = new Triangle(2, 3, 55);
+      newTriangle.SetSide3(side3ValueReplacement);
+      Assert.AreEqual(side3ValueReplacement, newTriangle.GetSide3());
+    }
   }
 }
