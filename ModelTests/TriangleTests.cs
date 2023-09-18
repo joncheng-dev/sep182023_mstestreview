@@ -1,11 +1,18 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ShapeTracker.Models;
+using System.Collections.Generic;
+using System;
 
 namespace ShapeTracker.Tests
 {
   [TestClass]
-  public class TriangleTests
+  public class TriangleTests : IDisposable
   {
+    public void Dispose()
+    {
+      Triangle.ClearAll();
+    }
+
     [TestMethod]
     public void TriangleConstructor_CreatesInstanceOfTriangle_Triangle()
     {
@@ -89,6 +96,44 @@ namespace ShapeTracker.Tests
       Triangle scaleneTriangle = new Triangle(3, 4, 5);
       string triangleType = scaleneTriangle.CheckType();
       Assert.AreEqual("scalene triangle", triangleType);
+    }
+
+    [TestMethod]
+    public void CheckType_DeterminesWhenIsosceles_String()
+    {
+      Triangle isoscelesTriangle = new Triangle(2, 1, 2);
+      string triangleType = isoscelesTriangle.CheckType();
+      Assert.AreEqual("isosceles triangle", triangleType);
+    }
+
+    [TestMethod]
+    public void CheckType_DeterminesWhenEquilateral_String()
+    {
+      Triangle equilateralTriangle = new Triangle(3, 3, 3);
+      string triangleType = equilateralTriangle.CheckType();
+      Assert.AreEqual("equilateral triangle", triangleType);
+    }
+
+    [TestMethod]
+    public void GetAll_ReturnsAllTriangleInstances_List()
+    {
+      Triangle triangle1 = new Triangle(2, 2, 9);
+      Triangle triangle2 = new Triangle(21, 3, 9);
+      Triangle triangle3 = new Triangle(1, 3, 9);
+      List<Triangle> expected = new List<Triangle> { triangle1, triangle2, triangle3 };
+      List<Triangle> actualResult = Triangle.GetAll();
+      CollectionAssert.AreEqual(expected, actualResult);
+    }
+
+    [TestMethod]
+    public void ClearAll_ClearsAllTriangleInstances_Void()
+    {
+      Triangle triangle1 = new Triangle(2, 2, 9);
+      Triangle triangle2 = new Triangle(21, 3, 9);
+      Triangle triangle3 = new Triangle(1, 3, 9);
+      List<Triangle> listOfTriangles = new List<Triangle> { };
+      Triangle.ClearAll();
+      CollectionAssert.AreEqual(listOfTriangles, Triangle.GetAll());      
     }
 
     
